@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useInterval } from '../../hooks/useInterval';
-import { secondsToTime } from '../../utils/secondsToTime';
+import { Button } from '../Button';
+import { Timer } from '../Timer';
 
 interface Props {
 	defaultPomodoroTime: number;
@@ -13,5 +14,11 @@ export default function PomodoroTimer(props: Props): JSX.Element {
 		setMainTime(mainTime - 1);
 	}, 1000);
 
-	return <div>DomoPoro Time: {secondsToTime(mainTime)} </div>;
+	return (
+		<div className="pomodoro">
+			<h2>Voce está: Trabalhando</h2>
+			<Timer mainTime={mainTime} />
+			<Button text="Clique aqui" onClick={() => alert(1)}></Button>
+		</div>
+	);
 }
