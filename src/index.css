@@ -60,7 +60,7 @@ body {
 	margin: 20px auto;
 }
 
-.pomodoro .working button {
+.working .pomodoro button {
 	background: #ef5d50;
 	color: #fff;
 }
