@@ -35,7 +35,7 @@ export default function PomodoroTimer(props: Props): JSX.Element {
 	const handleWorking = useCallback(() => {
 		setTimeCounting(true);
 		setWorking(true);
-		setResting(true);
+		setResting(false);
 		setMainTime(props.pomodoroTime);
 	}, [
 		setTimeCounting,
