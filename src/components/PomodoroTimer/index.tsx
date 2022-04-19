@@ -1,15 +1,16 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useInterval } from '../../hooks/useInterval';
+import { secondsToMinutes } from '../../utils/secondsToMinutes';
 import { secondsToTime } from '../../utils/secondsToTime';
 import { Button } from '../Button';
 import { Timer } from '../Timer';
 
-interface Props {
+type Props = {
 	pomodoroTime: number;
 	shortRestTime: number;
 	longRestTime: number;
 	cycles: number;
-}
+};
 
 export default function PomodoroTimer(props: Props): JSX.Element {
 	const [mainTime, setMainTime] = useState(props.pomodoroTime);
@@ -23,6 +24,10 @@ export default function PomodoroTimer(props: Props): JSX.Element {
 	const [completedCycles, setCompletedCycles] = useState(0);
 	const [fullWorkingTime, setFullWorkingTime] = useState(0);
 	const [numberOfPomodoros, setNumberOfPomodoros] = useState(0);
+
+	const statusLabel = useCallback(() => {
+		return working ? 'Trabalhando' : 'Descansando';
+	}, [working]);
 
 	useInterval(
 		() => {
@@ -102,9 +107,13 @@ export default function PomodoroTimer(props: Props): JSX.Element {
 		completedCycles,
 	]);
 
+	useEffect(() => {
+		document.title = `${secondsToMinutes(mainTime)} - ${statusLabel()}`;
+	}, [mainTime]);
+
 	return (
 		<div className="pomodoro">
-			<h2>Voce está: {working ? 'Trabalhando' : 'Descansando'}</h2>
+			<h2>Voce está: {statusLabel()}</h2>
 			<Timer mainTime={mainTime} />
 			<div className="controls">
 				<Button text="Trabalhar" onClick={() => handleWorking()}></Button>
